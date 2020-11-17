@@ -1,4 +1,4 @@
-FROM node:15.0.1-alpine3.12
+FROM node:15.2.1-alpine3.12
 
 # Install Shadow non busybox for better user management & support
 RUN apk add --no-cache git python3 build-base
