@@ -1,5 +1,4 @@
 // src/Modules/Speakers/SpeakersNetwork.ts
-
 import { recurrent } from 'brain.js';
 import { createLSTMNetwork } from '../../Library/Brain/Brain';
 import { Speakers } from './Speakers';

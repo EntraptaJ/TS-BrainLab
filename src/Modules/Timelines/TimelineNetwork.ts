@@ -1,5 +1,4 @@
 // src/Modules/Timelines/TimelineNetwork.ts
-
 import { recurrent } from 'brain.js';
 import { Container, Service } from 'typedi';
 import { LSTMNetworkController } from '../../Library/Brain/NetworkController';
