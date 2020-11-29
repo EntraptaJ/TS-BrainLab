@@ -1,29 +1,38 @@
 // src/Modules/NumberAI/NumberAINetwork.ts
 import { recurrent } from 'brain.js';
-import { createLSTMNetwork } from '../../Library/Brain/Brain';
+import { Container, Service } from 'typedi';
+import { Repository } from 'typeorm';
+import { InjectRepository } from 'typeorm-typedi-extensions';
+import { LSTMNetworkController } from '../../Library/Brain/NetworkController';
 import { NumberAI } from './NumberModel';
 
-let numberAINetwwork: recurrent.LSTM;
+@Service()
+class NumbersAINetwork {
+  public network: recurrent.LSTM;
 
-export async function createNumbersAINetwork(): Promise<recurrent.LSTM> {
-  console.log('Creating timelines network');
+  public constructor(
+    @InjectRepository(NumberAI)
+    private readonly numberAIRepository: Repository<NumberAI>,
+    private networkController: LSTMNetworkController,
+  ) {}
 
-  const timelines = await NumberAI.find();
+  public async trainNetwork(): Promise<void> {
+    const numberRecords = await this.numberAIRepository.find();
 
-  numberAINetwwork = await createLSTMNetwork(
-    'numbersAI',
-    timelines.map(({ text: input, output }) => ({
-      input,
-      output,
-    })),
-    true,
-  );
+    console.log(numberRecords);
 
-  return numberAINetwwork;
+    this.network = await this.networkController.createNetwork(
+      'numbersAI',
+      numberRecords.map(({ text: input, output }) => ({
+        input,
+        output,
+      })),
+    );
+  }
+
+  public testNumbers(inputString: string): string {
+    return this.network.run(inputString);
+  }
 }
 
-export function testNumberString(inputString: string): string {
-  const result = numberAINetwwork.run(inputString);
-
-  return result;
-}
+export const numbersNetwork = Container.get(NumbersAINetwork);

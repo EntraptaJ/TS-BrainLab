@@ -4,7 +4,6 @@ import { Service } from 'typedi';
 import { InjectManager, InjectRepository } from 'typeorm-typedi-extensions';
 import { Timeline } from './TimelineModel';
 import { TimelineInput } from './TimelineInput';
-import { Logger } from '../Logger/LoggerService';
 
 @Service()
 export class TimelineRepository {
@@ -13,7 +12,6 @@ export class TimelineRepository {
 
   public constructor(
     @InjectRepository(Timeline) private InjectRepository: Repository<Timeline>,
-    private logger: Logger,
   ) {}
 
   public async createTimeline(
@@ -34,8 +32,6 @@ export class TimelineRepository {
   }
 
   public findAll(): Promise<Timeline[]> {
-    this.logger.log('HelloWorld finding timelines');
-
     return this.InjectRepository.find();
   }
 }

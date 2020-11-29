@@ -1,11 +1,11 @@
 /* eslint-disable no-useless-constructor */
 // src/Modules/NumberAI/NumberAIResolver.ts
 import { Arg, ID, Mutation, Query, Resolver } from 'type-graphql';
-import { NumberAIInput } from './NumberAIInput';
-import { createNumbersAINetwork, testNumberString } from './NumberAINetwork';
-import { NumberAI } from './NumberModel';
-import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
+import { InjectRepository } from 'typeorm-typedi-extensions';
+import { NumberAIInput } from './NumberAIInput';
+import { numbersNetwork } from './NumberAINetwork';
+import { NumberAI } from './NumberModel';
 
 @Resolver()
 export class NumberAIResolver {
@@ -39,14 +39,14 @@ export class NumberAIResolver {
 
   @Mutation(() => String)
   public testNumberString(@Arg('input') input: string): string {
-    return testNumberString(input);
+    return numbersNetwork.testNumbers(input);
   }
 
   @Mutation(() => Boolean)
-  public trainNetwork(): boolean {
+  public trainNumbersNetwork(): boolean {
     setImmediate(() => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      createNumbersAINetwork();
+      numbersNetwork.trainNetwork();
     }, 1500);
 
     return true;

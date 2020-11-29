@@ -4,7 +4,7 @@ import { Service } from 'typedi';
 import { Logger } from '../Logger/LoggerService';
 import { TimelineInput } from './TimelineInput';
 import { Timeline } from './TimelineModel';
-import { testTimeline } from './TimelineNetwork';
+import { timelineNetworkController } from './TimelineNetwork';
 import { TimelineRepository } from './TimelineRepository';
 
 @Service()
@@ -30,9 +30,19 @@ export class TimelineResolver {
   }
 
   @Mutation(() => Boolean)
+  public trainTimelineNetwork(): boolean {
+    setImmediate(() => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      timelineNetworkController.trainNetwork();
+    }, 1500);
+
+    return true;
+  }
+
+  @Mutation(() => Boolean)
   public isTimelineSafe(
     @Arg('timelineId', () => ID) timelineId: number,
   ): boolean {
-    return testTimeline(timelineId);
+    return timelineNetworkController.testTimeline(timelineId);
   }
 }

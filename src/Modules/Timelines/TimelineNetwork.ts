@@ -1,30 +1,40 @@
 // src/Modules/Timelines/TimelineNetwork.ts
 
 import { recurrent } from 'brain.js';
-import { createLSTMNetwork } from '../../Library/Brain/Brain';
-import { Timeline } from './TimelineModel';
+import { Container, Service } from 'typedi';
+import { LSTMNetworkController } from '../../Library/Brain/NetworkController';
+import { TimelineRepository } from './TimelineRepository';
 
-let timelineNetwork: recurrent.LSTM;
+@Service()
+class TimelineNetworkController {
+  public network: recurrent.LSTM;
 
-export async function createTimelinesNetwork(): Promise<recurrent.LSTM> {
-  console.log('Creating timelines network');
+  public constructor(
+    private timelineRepository: TimelineRepository,
+    private networkController: LSTMNetworkController,
+  ) {}
 
-  const timelines = await Timeline.find();
+  public async trainNetwork(): Promise<void> {
+    const timelines = await this.timelineRepository.findAll();
 
-  timelineNetwork = await createLSTMNetwork(
-    'timelines',
-    timelines.map(({ timelineId, result }) => ({
-      input: timelineId.toString(),
-      output: result === true ? '1' : '0',
-    })),
-    true,
-  );
+    console.log(timelines);
 
-  return timelineNetwork;
+    this.network = await this.networkController.createNetwork(
+      'timelines',
+      timelines.map(({ timelineId, result }) => ({
+        input: timelineId.toString(),
+        output: result === true ? '1' : '0',
+      })),
+    );
+  }
+
+  public testTimeline(timelineId: number): boolean {
+    const result = this.network.run(timelineId.toString());
+
+    return result === '1';
+  }
 }
 
-export function testTimeline(timelineId: number): boolean {
-  const result = timelineNetwork.run(timelineId.toString());
-
-  return result === '1';
-}
+export const timelineNetworkController = Container.get(
+  TimelineNetworkController,
+);
