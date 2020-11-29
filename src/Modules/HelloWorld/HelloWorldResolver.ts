@@ -8,7 +8,7 @@ import { Logger } from '../Logger/LoggerService';
 @Resolver()
 export class HelloWorldResolver {
   public constructor(private readonly logger: Logger) {
-    console.log('RecipeResolver created!');
+    console.log('HelloWorldResolver created!');
   }
 
   @Query(() => String)

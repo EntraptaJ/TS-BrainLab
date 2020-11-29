@@ -13,7 +13,9 @@ export class TimelineResolver {
   public constructor(
     private timelineRepository: TimelineRepository,
     private logger: Logger,
-  ) {}
+  ) {
+    console.log('TimelineResolver created!');
+  }
 
   @Query(() => [Timeline])
   public timelines(): Promise<Timeline[]> {

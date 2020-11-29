@@ -1,10 +1,12 @@
 // src/Modules/Purchases/PurchaseResolver.ts
 import { Query, Resolver } from 'type-graphql';
+import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Logger } from '../Logger/LoggerService';
 import { Purchase } from './PurchaseModel';
 
+@Service()
 @Resolver()
 export class PurchaseResolver {
   public constructor(
@@ -12,7 +14,7 @@ export class PurchaseResolver {
     @InjectRepository(Purchase)
     private purchaseRepository: Repository<Purchase>,
   ) {
-    console.log('RecipeResolver created!');
+    console.log('PurchaseResolver created!');
   }
 
   @Query(() => [Purchase])

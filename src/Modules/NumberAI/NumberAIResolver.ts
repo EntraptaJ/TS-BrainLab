@@ -1,18 +1,22 @@
 /* eslint-disable no-useless-constructor */
 // src/Modules/NumberAI/NumberAIResolver.ts
 import { Arg, ID, Mutation, Query, Resolver } from 'type-graphql';
+import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { NumberAIInput } from './NumberAIInput';
 import { numbersNetwork } from './NumberAINetwork';
 import { NumberAI } from './NumberModel';
 
+@Service()
 @Resolver()
 export class NumberAIResolver {
   public constructor(
     @InjectRepository(NumberAI)
     private readonly numberAIRepository: Repository<NumberAI>,
-  ) {}
+  ) {
+    console.log('NumberAIResolver created!');
+  }
 
   @Query(() => [NumberAI])
   public numberAIs(): Promise<NumberAI[]> {
