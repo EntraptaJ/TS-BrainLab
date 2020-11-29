@@ -1,27 +1,24 @@
 {
-  "name": "TS-Core-TEMPLATE Container",
-  "dockerFile": "./Dockerfile.dev",
-  "settings": {
-    // This dev container does include /bin/bash if you prefer to use it instead of ash.
-    "terminal.integrated.shell.linux": "/bin/sh"
-  },
+  "name": "TS-BrainLab Container",
+  "dockerComposeFile": "./docker-compose.dev.yml",
+  "service": "TSBrainDev",
+  "runServices": ["Database", "TSBrainDev", "Redis"],
 
-  "remoteEnv": {
-    "SHELL": "/bin/sh"
-  },
-
-  "extensions": [
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
-    "github.vscode-codeql",
-    "visualstudioexptteam.vscodeintellicode",
-    "eamodio.gitlens"
-  ],
   "remoteUser": "node",
+
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
-  "mounts": [
-    "source=ts-core-modules,target=/workspace/node_modules,type=volume"
+
+  "extensions": [
+    "GitHub.vscode-pull-request-github",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "visualstudioexptteam.vscodeintellicode"
   ],
-  "postCreateCommand": "sudo chown node -R node_modules && npm i"
+
+  "remoteEnv": {
+    "SHELL": "/bin/bash"
+  },
+
+  "postCreateCommand": "sudo chown -R node:node /workspace && npm i"
 }

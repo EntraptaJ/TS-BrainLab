@@ -1,0 +1,40 @@
+version: '3.8'
+
+volumes:
+  modules:
+  databaseData:
+
+networks:
+  internalDB:
+  internalRedis:
+
+services:
+  TSBrainDev:
+    image: ts-brainlab:dev
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    volumes:
+      # API Folders
+      - ./:/workspace:cached
+      - modules:/workspace/node_modules
+    networks:
+      - internalDB
+
+  Database:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - databaseData:/var/lib/postgresql/data
+    networks:
+      - internalDB
+    environment:
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_DB: ts-brain
+
+  Redis:
+    image: redis:alpine3.12
+    networks:
+      - internalRedis

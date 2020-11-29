@@ -1,20 +1,40 @@
 // src/index.ts
-import { timeout } from './Utils/timeout';
+import fastify from 'fastify';
+import hyperid from 'hyperid';
+import 'reflect-metadata';
+import { createApolloServer } from './Library/Apollo';
+import { connectDatabase } from './Library/Database';
+import { logger, LogMode } from './Library/Logging';
+import { createSpeakersNetwork } from './Modules/Speakers/SpeakersNetwork';
 
 /**
- * Logs a greeting for the name after a 1.5 second delay.
- * @param name User you are greeting
+ * Fastify Web Server
  */
-async function sayHello(name = 'John'): Promise<void> {
-  console.log('Waiting 1.5 seconds then saying Hi');
+const webServer = fastify({
+  genReqId: () => hyperid().uuid,
+});
 
-  await timeout(1500);
+logger.log(LogMode.INFO, 'Connecting to database');
 
-  console.log(`Hello ${name}!`);
-}
+await connectDatabase();
 
-console.log(`Starting TS-Core`);
+logger.log(LogMode.INFO, 'Database connected. Creating Apollo Server');
 
-await sayHello('K-FOSS');
+/**
+ * Apollo GraphQL Server
+ */
+const gqlServer = await createApolloServer();
+
+await webServer.register(gqlServer.createHandler());
+
+logger.log(LogMode.INFO, 'API Server setup. Creating Neural Network');
+
+await Promise.all([createSpeakersNetwork()]);
+
+logger.log(LogMode.INFO, 'Neural Network created. Starting Web server');
+
+await webServer.listen(8080, '0.0.0.0');
+
+logger.log(LogMode.INFO, 'Listening on port 8080');
 
 export {};
