@@ -47,18 +47,23 @@ export interface Config {
    */
   bindHost: string;
 
-  ssh: {
-    /**
-     * Address to bind to. (Only needed when not running in container)
-     *
-     * Default: Config.HOST
-     */
-    bindHost: string;
+  /**
+   * Port to bind to.
+   *
+   * Default: `8080`
+   */
+  bindPort: string;
 
+  /**
+   * Redis Job Que & Cache Settings
+   */
+  redis: {
     /**
-     * SSH Port
+     * Host of the redis server
+     *
+     * Default: `Redis`
      */
-    port: number;
+    host: string;
   };
 }
 
@@ -72,9 +77,9 @@ export const config: Config = {
   },
 
   bindHost: process.env.HOST || '0.0.0.0',
+  bindPort: process.env.PORT || '8080',
 
-  ssh: {
-    bindHost: process.env.SSH_HOST || process.env.HOST || '0.0.0.0',
-    port: parseInt(process.env.SSH_PORT || '8022'),
+  redis: {
+    host: process.env.REDIS_HOST || 'Redis',
   },
 };

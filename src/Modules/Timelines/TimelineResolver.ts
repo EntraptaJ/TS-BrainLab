@@ -1,7 +1,7 @@
 // src/Modules/Timelines/TimelineResolver.ts
 import { Arg, ID, Mutation, Query, Resolver } from 'type-graphql';
 import { Service } from 'typedi';
-import { Logger } from '../Logger/LoggerService';
+import { APILogger } from '../Logger/APILoggerService';
 import { TimelineInput } from './TimelineInput';
 import { Timeline } from './TimelineModel';
 import { timelineNetworkController } from './TimelineNetwork';
@@ -12,7 +12,7 @@ import { TimelineRepository } from './TimelineRepository';
 export class TimelineResolver {
   public constructor(
     private timelineRepository: TimelineRepository,
-    private logger: Logger,
+    private logger: APILogger,
   ) {
     console.log('TimelineResolver created!');
   }

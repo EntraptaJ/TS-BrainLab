@@ -2,12 +2,12 @@
 import { Query, Resolver } from 'type-graphql';
 import { Service } from 'typedi';
 import { timeout } from '../../Utils/timeout';
-import { Logger } from '../Logger/LoggerService';
+import { APILogger } from '../Logger/APILoggerService';
 
 @Service()
 @Resolver()
 export class HelloWorldResolver {
-  public constructor(private readonly logger: Logger) {
+  public constructor(private readonly logger: APILogger) {
     console.log('HelloWorldResolver created!');
   }
 

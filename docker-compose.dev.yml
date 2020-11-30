@@ -21,6 +21,7 @@ services:
       - modules:/workspace/node_modules
     networks:
       - internalDB
+      - internalRedis
 
   Database:
     image: postgres:alpine

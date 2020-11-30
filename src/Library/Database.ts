@@ -56,11 +56,14 @@ export async function connectDatabase(testing = false): Promise<Connection> {
 
   return createConnection({
     type: 'postgres',
+
+    host: config.database.hostname,
+    port: config.database.port,
+
     database: testing ? 'test-db' : config.database.database,
     username: config.database.username,
     password: config.database.password,
-    port: config.database.port,
-    host: config.database.hostname,
+
     synchronize: true,
     subscribers,
 

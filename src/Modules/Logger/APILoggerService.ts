@@ -4,7 +4,7 @@ import type { Context } from '../../Library/Context';
 
 // this service will be recreated for each request (scoped)
 @Service()
-export class Logger {
+export class APILogger {
   public constructor(@Inject('context') private readonly context: Context) {
     console.log('Logger created!');
   }

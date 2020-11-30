@@ -3,14 +3,14 @@ import { Query, Resolver } from 'type-graphql';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { Logger } from '../Logger/LoggerService';
+import { APILogger } from '../Logger/APILoggerService';
 import { Purchase } from './PurchaseModel';
 
 @Service()
 @Resolver()
 export class PurchaseResolver {
   public constructor(
-    private readonly logger: Logger,
+    private readonly logger: APILogger,
     @InjectRepository(Purchase)
     private purchaseRepository: Repository<Purchase>,
   ) {

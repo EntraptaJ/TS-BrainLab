@@ -1,9 +1,6 @@
 // src/Library/Apollo.ts
 import { Container, ContainerInstance } from 'typedi';
-import {
-  GraphQLRequestContext,
-  ApolloServerPlugin,
-} from 'apollo-server-plugin-base';
+import { GraphQLRequestContext } from 'apollo-server-plugin-base';
 import { Context, getGQLContext } from './Context';
 
 type ApolloServer = import('apollo-server-fastify').ApolloServer;
