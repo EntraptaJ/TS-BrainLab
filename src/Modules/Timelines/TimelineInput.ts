@@ -4,9 +4,13 @@ import { Timeline } from './TimelineModel';
 
 @InputType()
 export class TimelineInput implements Partial<Timeline> {
-  @Field()
+  @Field({
+    description: 'Timeline identifier',
+  })
   public timelineId: number;
 
-  @Field()
+  @Field({
+    description: 'End outcome of the timeline, is it safe or not',
+  })
   public result: boolean;
 }

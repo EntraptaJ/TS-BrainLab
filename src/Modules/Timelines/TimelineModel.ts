@@ -5,18 +5,24 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @ObjectType()
 @Entity()
 export class Timeline {
-  @Field(() => ID)
+  @Field(() => ID, {
+    description: 'Internal database UUID',
+  })
   @PrimaryGeneratedColumn('uuid')
   public readonly id: string;
 
-  @Field(() => Int)
+  @Field(() => Int, {
+    description: 'Timeline identifier',
+  })
   @Column('integer')
   public timelineId: number;
 
+  @Field(() => Boolean, {
+    description: 'Is the timeline safe and a postive result',
+  })
   @Column('boolean', {
     default: false,
     unique: true,
   })
-  @Field(() => Boolean)
   public result: boolean;
 }

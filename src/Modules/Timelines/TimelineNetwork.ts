@@ -13,6 +13,11 @@ class TimelineNetworkController {
     private networkController: LSTMNetworkController,
   ) {}
 
+  /**
+   * Train the Timeline Neural network with all existing Timelines and their result in the data
+   *
+   * @returns Promise resolving once the neural network has been trained
+   */
   public async trainNetwork(): Promise<void> {
     const timelines = await this.timelineRepository.findAll();
 
@@ -27,6 +32,12 @@ class TimelineNetworkController {
     );
   }
 
+  /**
+   * Test the potenial outcome of a timeline based on it's Id using the outcome of all timelines in the database using the trained Timeline Neural network
+   * @param timelineId Input timeline Id to analyze
+   *
+   * @returns Boolean result the Timeline Neural network wether it determines the timeline to be safe or not
+   */
   public testTimeline(timelineId: number): boolean {
     const result = this.network.run(timelineId.toString());
 

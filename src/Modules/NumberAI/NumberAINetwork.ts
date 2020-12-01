@@ -16,6 +16,11 @@ class NumbersAINetwork {
     private networkController: LSTMNetworkController,
   ) {}
 
+  /**
+   * Train the NumbersAI Network with the existing database entities
+   *
+   * @returns Promise resolving once the training has completed
+   */
   public async trainNetwork(): Promise<void> {
     const numberRecords = await this.numberAIRepository.find();
 
@@ -30,6 +35,12 @@ class NumbersAINetwork {
     );
   }
 
+  /**
+   * Run the neural network agaisnt an input string
+   * @param inputString Number String to request the Neural Network result
+   *
+   * @returns The neural network output string
+   */
   public testNumbers(inputString: string): string {
     return this.network.run(inputString);
   }
