@@ -18,7 +18,9 @@ export class NumberAIResolver {
     console.log('NumberAIResolver created!');
   }
 
-  @Query(() => [NumberAI])
+  @Query(() => [NumberAI], {
+    description: 'Query all NumberAI entities',
+  })
   public numberAIs(): Promise<NumberAI[]> {
     return this.numberAIRepository.find({
       order: {
@@ -27,7 +29,9 @@ export class NumberAIResolver {
     });
   }
 
-  @Mutation(() => [NumberAI])
+  @Mutation(() => [NumberAI], {
+    description: 'Create new NumberAI entity',
+  })
   public async createNumberAI(
     @Arg('input', () => NumberAIInput) input: NumberAIInput,
   ): Promise<NumberAI[]> {
@@ -41,12 +45,17 @@ export class NumberAIResolver {
     });
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String, {
+    description:
+      'Using the NumberAI Neural network to test the output of the input string based on existing training data',
+  })
   public testNumberString(@Arg('input') input: string): string {
     return numbersNetwork.testNumbers(input);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, {
+    description: 'Start a training job of the NumberAI Neural Network',
+  })
   public trainNumbersNetwork(): boolean {
     setImmediate(() => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -56,7 +65,9 @@ export class NumberAIResolver {
     return true;
   }
 
-  @Mutation(() => [NumberAI])
+  @Mutation(() => [NumberAI], {
+    description: 'Delete an existing NumberAI entitiy',
+  })
   public async deleteNumberAI(
     @Arg('numberId', () => ID) id: string,
   ): Promise<NumberAI[]> {

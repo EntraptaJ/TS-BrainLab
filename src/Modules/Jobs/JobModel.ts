@@ -3,6 +3,9 @@ import { Field, ID, ObjectType } from 'type-graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { JobStatus } from './JobStatus';
 
+/**
+ * Job Entity Model Class
+ */
 @ObjectType()
 @Entity()
 export class Job {

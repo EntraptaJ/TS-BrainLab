@@ -12,12 +12,16 @@ export class ItemResolver {
     private readonly itemRepository: Repository<Item>,
   ) {}
 
-  @Query(() => [Item])
+  @Query(() => [Item], {
+    description: 'Query all Item entities',
+  })
   public async items(): Promise<Item[]> {
     return this.itemRepository.find();
   }
 
-  @Mutation(() => [Item])
+  @Mutation(() => [Item], {
+    description: 'Create a new Item entity',
+  })
   public async createItem(
     @Arg('input', () => ItemInput) input: ItemInput,
   ): Promise<Item[]> {

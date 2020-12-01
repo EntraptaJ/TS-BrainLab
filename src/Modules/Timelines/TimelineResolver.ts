@@ -17,21 +17,27 @@ export class TimelineResolver {
     console.log('TimelineResolver created!');
   }
 
-  @Query(() => [Timeline])
+  @Query(() => [Timeline], {
+    description: 'Query all Timeline entities',
+  })
   public timelines(): Promise<Timeline[]> {
     this.logger.log('Resolver query finding timelines');
 
     return this.timelineRepository.findAll();
   }
 
-  @Mutation(() => [Timeline])
+  @Mutation(() => [Timeline], {
+    description: 'Create a new timeline entity',
+  })
   public async createTimeline(
     @Arg('input', () => TimelineInput) input: TimelineInput,
   ): Promise<Timeline[]> {
     return this.timelineRepository.createTimeline(input);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, {
+    description: 'Start a training job of the Timeline analysis Neural Network',
+  })
   public trainTimelineNetwork(): boolean {
     setImmediate(() => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -41,7 +47,10 @@ export class TimelineResolver {
     return true;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, {
+    description:
+      'Use the timeline neural network to determine if a timeline is safe or not based on current data',
+  })
   public isTimelineSafe(
     @Arg('timelineId', () => ID) timelineId: number,
   ): boolean {

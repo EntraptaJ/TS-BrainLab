@@ -4,7 +4,10 @@ import { Speakers } from './Speakers';
 import { speakersNetwork } from './SpeakersNetwork';
 
 export class SpeakerResolver {
-  @Query(() => String)
+  @Query(() => String, {
+    description:
+      'Use the Spekaers neural network to determine who the speaker is refering to with a string of text',
+  })
   public speakingTo(
     @Arg('speaker', () => Speakers)
     speaker: Speakers,
@@ -21,7 +24,9 @@ export class SpeakerResolver {
     return result;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, {
+    description: 'Start a training job of the Speakers Neural Network',
+  })
   public trainSpeakersNetwork(): boolean {
     setImmediate(() => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises

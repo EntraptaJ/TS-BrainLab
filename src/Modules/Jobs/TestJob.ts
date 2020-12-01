@@ -3,8 +3,6 @@ import { logger, LogMode } from '../../Library/Logging';
 import { timeout } from '../../Utils/timeout';
 import type { JobQueProcessFN, JobQueType } from './JobQue';
 
-type Test = ReturnType<JobQueProcessFN>;
-
 export async function testJob(
   job: Parameters<JobQueProcessFN>['0'],
 ): Promise<JobQueType> {

@@ -13,7 +13,8 @@
     "GitHub.vscode-pull-request-github",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "visualstudioexptteam.vscodeintellicode"
+    "visualstudioexptteam.vscodeintellicode",
+    "ms-vscode.vscode-typescript-next"
   ],
 
   "remoteEnv": {

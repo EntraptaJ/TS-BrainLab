@@ -17,7 +17,9 @@ export class PurchaseResolver {
     console.log('PurchaseResolver created!');
   }
 
-  @Query(() => [Purchase])
+  @Query(() => [Purchase], {
+    description: 'Query all purchase entities',
+  })
   public purchases(): Promise<Purchase[]> {
     this.logger.log('Getting purchases');
 

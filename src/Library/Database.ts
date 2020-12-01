@@ -52,6 +52,9 @@ export async function connectDatabase(testing = false): Promise<Connection> {
     getEntitySubscribers(),
   ]);
 
+  /**
+   * Use TypeORM Container
+   */
   useContainer(Container);
 
   return createConnection({

@@ -1,7 +1,6 @@
 // src/Modules/Jobs/JobQue.ts
 import Bull from 'bull';
 import { config } from '../../Library/Config';
-import { testJob } from './TestJob';
 
 export const jobQue = new Bull<string>('JobQue', {
   redis: {

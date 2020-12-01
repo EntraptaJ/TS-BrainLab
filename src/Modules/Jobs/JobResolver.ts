@@ -9,17 +9,23 @@ import { JobRepository } from './JobRepository';
 export class JobResolver {
   public constructor(private jobRepository: JobRepository) {}
 
-  @Query(() => [Job])
+  @Query(() => [Job], {
+    description: 'Query all jobs',
+  })
   public jobs(): Promise<Job[]> {
     return this.jobRepository.findAll();
   }
 
-  @Mutation(() => Job)
+  @Mutation(() => Job, {
+    description: 'Create a new Job',
+  })
   public createJob(@Arg('input', () => String) input: string): Promise<Job> {
     return this.jobRepository.createJob(input);
   }
 
-  @Query(() => Boolean)
+  @Query(() => Boolean, {
+    description: 'Log all Redis Bull Workers to the server console',
+  })
   public async redisCheck(): Promise<boolean> {
     const test = await jobQue.getWorkers();
 
