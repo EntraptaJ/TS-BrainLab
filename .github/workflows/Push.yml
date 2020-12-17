@@ -16,6 +16,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           registry-url: 'https://registry.npmjs.org'
+      - name: Install Required Packages
+        run: |
+          sudo apt update
+          sudo apt install -y libx11-dev libxi-dev libxext-dev
       - name: Install dependencies
         run: npm ci
       - name: Run Tests
