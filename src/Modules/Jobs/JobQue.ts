@@ -8,14 +8,14 @@ export const jobQue = new Bull<string>('JobQue', {
   },
 });
 
-type Callback2Type<T> = T extends (
-  concurrency: number,
-  callback: infer X,
-) => Promise<void>
-  ? X
-  : any;
+// type Callback2Type<T> = T extends (
+//   concurrency: number,
+//   callback: infer X,
+// ) => Promise<void>
+//   ? X
+//   : any;
 
-type FunctionInput = (concurrency: number, input: infer x) => Promise<void>;
+// type FunctionInput = (concurrency: number, input: infer x) => Promise<void>;
 
 type BullType<T> = T extends Bull.Queue<infer X> ? X : never;
 
